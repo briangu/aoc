@@ -1,4 +1,3 @@
 rblock::{+/.rs'{~x~""}{.rl()}\~.rl()}
 ga::{.mi{x;rblock()}\~rblock()}
-go::{.fc(.ic("1.txt"));M::ga();+/(M@>M)@!3}
-.p(go())
+.p({.fc(.ic("1.txt"));M::ga();+/(M@>M)@!3})
