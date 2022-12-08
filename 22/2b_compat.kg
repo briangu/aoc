@@ -1,0 +1,9 @@
+B::{(#y)-(#x)};R::B(0cX;)
+W::{:[x~0cA;0cY:|x~0cB;0cZ;0cX]}
+L::{:[x~0cA;0cZ:|x~0cB;0cX;0cY]}
+Q::{:[y~0cY;:[x~0cA;0cX:|x~0cB;0cY;0cZ]:|y~0cX;L(x);W(x)]}
+C::{(R(y)*3)+R(Q(x;y))+1}
+F::{t::.rl();.p(t);:[(#t)~3;C(t@0;t@2);0]}
+go::{+/.mi{x;F()}\~F()}
+O::{.fc(.ic("2.txt"));go()}
+.p(O())
