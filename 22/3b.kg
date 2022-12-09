@@ -1,0 +1,11 @@
+H::{:[x<((#0cZ)+1);26+x-(#0cA);x-(#0ca)]+1}
+S::{a::x;s::I({#x}'a;I({#x}'y;{#x}'z));H(*s)}
+F::{a::.rl();b::.rl();c::.rl();:[(#a)>0;S(a;b;c);0]}
+go::{+/.mi{x;F()}\~F()}
+O::{.fc(.ic("3.txt"));go()}
+.p(O())
+
+
+.comment("debug")
+S("vJrwpWtwJgWrhcsFMMfFFhFp";"jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL";"PmmdzqPrVvPwwTWBwg")
+debug
