@@ -1,6 +1,6 @@
 L::{(*(x?y))#x};R::{(*(x?y)+1)_x};A::L(;",");B::R(;",")
 LE::{(x=y)|(x<y)};GE::{(x=y)|(x>y)}
-LL::{.rs(L(x;"-"))};LR::{.rs(R(x;"-"))}
+LL::{q::L(x;"-");.rs(q)};LR::{q::R(x;"-");.rs(q)}
 S::{AA::LL(A(x));AB::LR(A(x));BA::LL(B(x));BB::LR(B(x));(LE(AA;BA)&GE(AB;BB))|(LE(BA;AA)&GE(BB;AB))}
 F::{a::.rl();:[(#a)>0;S(a);0]}
 go::{+/.mi{x;F()}\~F()}
@@ -10,6 +10,11 @@ go::{+/.mi{x;F()}\~F()}
 .comment("****")
 s::"20-45,13-44"
 s::"2-8,3-7"
+
+LL(A(s))
+LR(A(s))
+LL(B(s))
+LR(B(s))
 ****
 
 
