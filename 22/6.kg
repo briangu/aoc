@@ -1,0 +1,9 @@
+W::{a::x;{(x<((#a)-4))&((#(?(a@(x+!4))))<4)}{x+1}:~0}
+.p({.fc(.ic("6.txt"));W(.rl())+4}())
+
+.comment("test")
+
+W("bvwbjplbgvbhsrlpgdmjqwftvncz")
+W'["bvwbjplbgvbhsrlpgdmjqwftvncz" "nppdvjthqldpwncqszvftbrmjlhg" "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg" "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw"]
+
+test
