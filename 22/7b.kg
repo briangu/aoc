@@ -1,0 +1,12 @@
+N::{d:::{};d,:s,0;d,:c,:{};d,:p,x;d,:n,y};D::N(1%0;"/");ROOT::D;FSUM::[]
+ADD::{p::.rs(((x?" ")@0)#x);q::((D?:s)+p);D,:s,q}
+CDD::{n::N(D;x);(D?:c),x,n;D::n}
+CDU::{u::(D?:s);FSUM::FSUM,u;p::D?:p;p,:s,(p?:s)+u;D::p}
+CD::{:[x="..";:[~((D?:n)="/");CDU();0]:|x="/";D::ROOT;CDD(x)]}
+ARG::{(:[(#y)=2;y@1;y@0]+1)_x}
+CMD::{cmd::2#((1+y@0)_x);:[cmd="ls";"":|cmd="cd";CD(ARG(x;y));"unknown: :",cmd,":"]}
+F::{k::x?" ";a::x@0;o:::[a=0c$;CMD(x;k):|a=0cd;"dir";ADD(x)];o}
+cmds::{.mi{F(x);.rl()}:~.rl()}
+unwind::{{x;~((D?:n)=(ROOT?:n))}{x;CD("..")}:~CD("..")}
+filter::{q::x;r::y;p::{((q@x)+r)<30000000}{x+1}\~0;o::q@(#p);(o+r),o}
+.fc(.ic("7.txt"));cmds();unwind();.p(ROOT?:s);FSUM::FSUM@<FSUM;.p(FSUM);k::70000000-ROOT?:s;.p(k);.p(filter(FSUM;k))
