@@ -1,12 +1,10 @@
-N::{d:::{[:s 0]};d,:c,:{};d,:p,x;d,:n,y}
-D::N(1%0;"/")
-ROOT::D
-ARG::{(:[(#y)=2;y@1;y@0]+1)_x}
-LS::{"ls"}
+N::{d:::{[:s 0]};d,:c,:{};d,:p,x;d,:n,y};D::N(1%0;"/");ROOT::D;FSUM::0
+ADD::{q::((D?:s)+.rs(x));D,:s,q}
 CDD::{n::N(D;x);(D?:c),x,n;D::n}
-CDU::{p::D?:p;p,:s,(p?:s)+(D?:s);D::p}
+CDU::{u::(D?:s);:[u < 100000;FSUM::FSUM+u;0];p::D?:p;p,:s,(p?:s)+u;D::p}
 CD::{:[x="..";CDU():|x="/";D::ROOT;CDD(x)]}
+ARG::{(:[(#y)=2;y@1;y@0]+1)_x}
 CMD::{cmd::2#((1+y@0)_x);:[cmd="ls";LS():|cmd="cd";CD(ARG(x;y));"unknown: :",cmd,":"]}
-F::{k::x?" ";a::x@0;o:::[a=0c$;CMD(x;k):|a=0cd;"dir";.rs(x)];o}
+F::{.p(x);k::x?" ";a::x@0;o:::[a=0c$;CMD(x;k):|a=0cd;"dir";ADD(x)];o}
 cmds::{.mi{F(x);.rl()}:~.rl()}
-.p({.fc(.ic("7.test"));cmds();ROOT}())
+.p({.fc(.ic("7.txt"));cmds();.d("FSUM=");FSUM}())
