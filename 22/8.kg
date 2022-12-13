@@ -7,4 +7,5 @@ E::{[a b c];a::x;b::y;c::z;h::H(x;y;z);q::(GW-z)-1;q=+/{H(a;b;c+1+x)<h}'!q}
 V::{(N(x;y;z)|S(x;y;z)|E(x;y;z)|W(x;y;z))}
 I::{[a b];a::x;b::y;{V(a;b;x+1)}'!(GW-2)}
 O::{[a];a::x;{I(a;x+1)}'!(GH-2)}
-.p((2*((GH-2) + GW))++/O(G))
+hidden::O(G);edges::(2*(GH-2))+2*GW
+.p(edges++/+/hidden)
