@@ -1,4 +1,4 @@
-G::{.fc(.ic("8.txt"));{{(#x)-#0c0}'x}'.mi{x;.rl()}\~.rl()}();GH::#G;GW::#G@0;
+G::{.fc(.ic("8.txt"));{{(#x)-#0c0}'x}'.mi{x;.rl()}\~.rl()}();GH::#G;GW::#G@0
 H::{(x@y)@z}
 N::{[a b c];a::x;b::y;c::z;h::H(x;y;z);y=+/{H(a;b-1+x;c)<h}'!y}
 S::{[a b c];a::x;b::y;c::z;h::H(x;y;z);q::(GH-y)-1;q=+/{H(a;b+1+x;c)<h}'!q}
