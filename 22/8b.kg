@@ -1,9 +1,9 @@
 G::{.fc(.ic("8.txt"));{{(#x)-#0c0}'x}'.mi{x;.rl()}\~.rl()}();GH::#G;GW::#G@0
-H::{(x@y)@z}
-N::{[a b c];a::x;b::y;c::z;h::H(x;y;z);o::{H(a;b-1+x;c)<h}'!y;p::o?0;:[#p;1+*p;#o]}
-S::{[a b c];a::x;b::y;c::z;h::H(x;y;z);q::(GH-y)-1;o::{H(a;b+1+x;c)<h}'!q;p::o?0;:[#p;1+*p;#o]}
-W::{[a b c];a::x;b::y;c::z;h::H(x;y;z);o::{H(a;b;c-1+x)<h}'!z;p::o?0;:[#p;1+*p;#o]}
-E::{[a b c];a::x;b::y;c::z;h::H(x;y;z);q::(GW-z)-1;o::{H(a;b;c+1+x)<h}'!q;p::o?0;:[#p;1+*p;#o]}
+H::{(x@y)@z};R::{p::x?0;:[#p;1+*p;#x]}
+N::{[a b c];a::x;b::y;c::z;h::H(x;y;z);o::{H(a;b-1+x;c)<h}'!y;R(o)}
+S::{[a b c];a::x;b::y;c::z;h::H(x;y;z);q::(GH-y)-1;o::{H(a;b+1+x;c)<h}'!q;R(o)}
+W::{[a b c];a::x;b::y;c::z;h::H(x;y;z);o::{H(a;b;c-1+x)<h}'!z;R(o)}
+E::{[a b c];a::x;b::y;c::z;h::H(x;y;z);q::(GW-z)-1;o::{H(a;b;c+1+x)<h}'!q;R(o)}
 V::{(N(x;y;z)*S(x;y;z)*E(x;y;z)*W(x;y;z))}
 I::{[a b];a::x;b::y;{V(a;b;x+1)}'!(GW-2)}
 O::{[a];a::x;{I(a;x+1)}'!(GH-2)}
