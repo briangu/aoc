@@ -1,0 +1,34 @@
+HX::0;HY::0;TX::0;TY::0;V:::{}
+PH::{.d(HX);.d(" ");.p(HY)}
+MOVH::{HX::HX+x;HY::HY+y}
+
+PH()
+MOVH(0;1)
+PH()
+MOVH(0;-1)
+PH()
+
+U::{.p("U");{x;MOVH(0;1)}'1+!x}
+D::{.p("D");{x;MOVH(0;-1)}'1+!x}
+L::{.p("L");{x;MOVH(-1;0)}'1+!x}
+R::{.p("R");{x;MOVH(1;0)}'1+!x}
+
+U(5)
+PH()
+D(5)
+PH()
+R(5)
+PH()
+L(5)
+PH()
+
+CMD::{:[x=0cU;U(y):|x=0cD;D(y):|x=0cL;L(y);R(y)]}
+F::{[a b];a::x@0;b::.rs(2_x);.d(a);.d(" ");.p(b);CMD(a;b)}
+.fc(.ic("9.test"));{.mi{F(x);.rl()}:~.rl()}()
+PH()
+
+.comment("HOLD")
+CMD::{.d(x);.d(" ");.p(y);:[x=0cU;U(y):|x=0cD;D(U):|x=0cL;L(y);R(y)]}
+F::{[k a b];k::x?" ";a::x@0;b::.rs(2_x);CMD(a;b)}
+.fc(.ic("9.test"));{.mi{F(x);.rl()}:~.rl()}()
+HOLD
