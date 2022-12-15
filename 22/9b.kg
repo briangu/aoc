@@ -1,4 +1,3 @@
-:"Currently this only works Original Klong due to bug in KlongPy range operator ?"
 PATH::{x;[11 5]}'!10;NX::!((#PATH)-1);SP::{PATH::PATH:-z,x,y}
 PX::{(PATH@x)@0};PY::{(PATH@x)@1};V::,,PX(0),PY(0)
 SGN::{x:%#x};OFF::{:[x=0;0;(x+-SGN(x))]}
