@@ -1,55 +1,11 @@
 PATH::{x;[11 5]}'!10;NX::!((#PATH)-1);SP::{PATH::PATH:-z,x,y}
 PX::{(PATH@x)@0};PY::{(PATH@x)@1};V::,,PX(0),PY(0)
 SGN::{x:%#x};OFF::{:[x=0;0;(x+-SGN(x))]}
-MVH::{SP(0;0;PX(0)+x);SP(0;1;PY(0)+y);.d("PATH: ");.p(PATH)}
-MVT::{.d("MVT: ");.p(x,y,z);SP(z;0;x);SP(z;1;y);:[z=((#PATH)-1);V::V,,x,y;0];1}
+MVH::{SP(0;0;PX(0)+x);SP(0;1;PY(0)+y)}
+MVT::{SP(z;0;x);SP(z;1;y);:[z=((#PATH)-1);V::V,,x,y;0];1}
 DQ::{:[y>0;MVT(PX(z)+x;PY(z)+1;z);MVT(PX(z)+x;PY(z)-1;z)]}
-DT::{.d("DT: ");.p(x,y,z);:[x=0;MVT(PX(z);PY(z+1)+OFF(y);z+1):|y=0;MVT(PX(z+1)+OFF(x);PY(z);z+1);DQ(SGN(x);y;z+1)]}
-CHKT::{[a b];a::PX(x)-PX(x+1);b::PY(x)-PY(x+1);.d("AB: ");.p(a,b);:[((#a)>1)|((#b)>1);DT(a;b;x);0]}
+DT::{:[x=0;MVT(PX(z);PY(z+1)+OFF(y);z+1):|y=0;MVT(PX(z+1)+OFF(x);PY(z);z+1);DQ(SGN(x);y;z+1)]}
+CHKT::{[a b];a::PX(x)-PX(x+1);b::PY(x)-PY(x+1);:[((#a)>1)|((#b)>1);DT(a;b;x);0]}
 MV::{[a b];a::x;b::y;{x;MVH(a;b);{CHKT(x)}'NX}'!z}
 CMD::{:[x=0cU;MV(0;1;y):|x=0cD;MV(0;-1;y):|x=0cL;MV(-1;0;y);MV(1;0;y)]}
-
-
-.fc(.ic("9.txt"));{.mi{.p(x);CMD(x@0;.rs(2_x));.rl()}:~.rl()}()
-.p(PATH)
-.p(?V)
-.p(#?V)
-
-
-
-.comment("HOLD")
-
-.d("-2 ");.p(OFF(-2))
-.d("2 ");.p(OFF(2))
-
-.p("R 4");CMD(0cR;4);.p(PATH)
-.p("U 4");CMD(0cU;4);.p(PATH)
-.p("L 3");CMD(0cL;3);.p(PATH)
-.p("D 1");CMD(0cD;1);.p(PATH)
-.p("R 4");CMD(0cR;4);.p(PATH)
-.p("D 1");CMD(0cD;1);.p(PATH)
-.p("L 5");CMD(0cL;5);.p(PATH)
-.p("R 2");CMD(0cR;2);.p(PATH)
-
-SP(0;0;1);SP(0;1;1);SP(1;0;0);SP(1;1;0);.p(" ");.p(PATH)
-.p("U 2");CMD(0cU;2);.p(PATH)
-SP(0;0;1);SP(0;1;1);SP(1;0;0);SP(1;1;0);.p(" ");.p(PATH)
-.p("R 2");CMD(0cR;2);.p(PATH)
-
-SP(0;0;1);SP(0;1;1);SP(1;0;2);SP(1;1;0);.p(" ");.p(PATH)
-.p("U 2");CMD(0cU;2);.p(PATH)
-SP(0;0;1);SP(0;1;1);SP(1;0;2);SP(1;1;0);.p(" ");.p(PATH)
-.p("L 2");CMD(0cL;2);.p(PATH)
-
-SP(0;0;1);SP(0;1;1);SP(1;0;0);SP(1;1;2);.p(" ");.p(PATH)
-.p("D 2");CMD(0cD;2);.p(PATH)
-SP(0;0;1);SP(0;1;1);SP(1;0;0);SP(1;1;2);.p(" ");.p(PATH)
-.p("R 2");CMD(0cR;2);.p(PATH)
-
-SP(0;0;1);SP(0;1;1);SP(1;0;2);SP(1;1;2);.p(" ");.p(PATH)
-.p("D 2");CMD(0cD;2);.p(PATH)
-SP(0;0;1);SP(0;1;1);SP(1;0;2);SP(1;1;2);.p(" ");.p(PATH)
-.p("L 2");CMD(0cL;2);.p(PATH)
-
-
-HOLD
+.fc(.ic("9.txt"));{.mi{CMD(x@0;.rs(2_x));.rl()}:~.rl()}();.p(#?V)
