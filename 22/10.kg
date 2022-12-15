@@ -1,0 +1,7 @@
+C::0;X::1;T::0;R::0;I::"";TC::20;SSS::0
+GDBH::{.d("C");.d(" ");.d("X");.d(" ");.d("T");.d(" ");.d("I");.d(" ");.d("R");.d(" ");.p("SS")}
+USS::{TC::TC+40;o::C*X;SSS::SSS+o;o};SS::{:[C=TC;USS();""]}
+GDB::{.d(C);.d(" ");.d(X);.d(" ");.d(T);.d(" ");.d(I);.d(" ");.d(R);.d(" ");.p(SS())}
+ADDX::{I::"ADDX";T::2;R::x};NOOP::{I::"NOOP";T::1;R::0}
+CMD::{:[x="noop";NOOP();ADDX(y)]};RUN::{{x;C::C+1;GDB();CHKSS()}'!T;T::0;X::X+R;R::0;I::""}
+GDBH();.fc(.ic("10.txt"));{.mi{CMD(4#x;.rs(5_x));RUN();.rl()}:~.rl()}();GDB();.p(SSS)
