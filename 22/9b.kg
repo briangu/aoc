@@ -1,4 +1,4 @@
-PATH::{x;[0 0]}'!10;NX::!((#PATH)-1);SP::{PATH::PATH:-z,x,y}
+PATH::{x;[11 5]}'!10;NX::!((#PATH)-1);SP::{PATH::PATH:-z,x,y}
 PX::{(PATH@x)@0};PY::{(PATH@x)@1};V::,,PX(0),PY(0)
 SGN::{x:%#x};OFF::{:[x=0;0;(x+-SGN(x))]}
 MVH::{SP(0;0;PX(0)+x);SP(0;1;PY(0)+y);.d("PATH: ");.p(PATH)}
@@ -11,6 +11,7 @@ CMD::{:[x=0cU;MV(0;1;y):|x=0cD;MV(0;-1;y):|x=0cL;MV(-1;0;y);MV(1;0;y)]}
 
 
 .fc(.ic("9.txt"));{.mi{.p(x);CMD(x@0;.rs(2_x));.rl()}:~.rl()}()
+.p(PATH)
 .p(?V)
 .p(#?V)
 
