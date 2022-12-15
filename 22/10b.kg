@@ -1,0 +1,6 @@
+C::0;X::1;T::0;R::0;CRT::{x;40#["."]}'!6;DCRT::{{.d(CRT@x);.p("")}'!6}
+ROW::{C:%40};COL::{C-(ROW()*40)};ON::{a::COL();(a=(X-1))|(a=X)|(a=(X+1))};SP::{CRT::CRT:-z,x,y}
+SETP::{SP(ROW();COL();"#")};UPDCRT::{.p(C,X,ON());:[ON();SETP();0]}
+ADDX::{T::2;R::x};NOOP::{T::1;R::0};CMD::{:[x="noop";NOOP();ADDX(y)]}
+RUN::{{x;UPDCRT();C::(C+1)!240}'!T;T::0;X::X+R;R::0;.d("X: ");.p(X)}
+.fc(.ic("10.txt"));{.mi{.p(x);CMD(4#x;.rs(5_x));RUN();.rl()}:~.rl()}();DCRT()
