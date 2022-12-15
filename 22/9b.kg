@@ -1,0 +1,12 @@
+PATH::{x;[11 5]}'!10;NX::!((#PATH)-1)
+SP::{PATH::PATH:-z,x,y};PX::{(PATH@x)@0};PY::{(PATH@x)@1}
+LH::PX(0),PY(0);V::,,PX(0),PY(0)
+MVH::{LH::PX(0),PY(0);SP(0;0;PX(0)+x);SP(0;1;PY(0)+y);.p(PATH)}
+MVT::{[a b];a::LH@0;b::LH@1;LH::PX(x),PY(x);SP(x;0;a);SP(x;1;b);:[x=((#PATH)-1);V::V,,a,b;0];1}
+CHKT::{:[((#(PX(x+1)-PX(x)))>1)|((#(PY(x+1)-PY(x)))>1);MVT(x+1);0]}
+MV::{[a b];a::x;b::y;{x;MVH(a;b);{CHKT(x)}'NX}'!z}
+CMD::{:[x=0cU;MV(0;1;y):|x=0cD;MV(0;-1;y):|x=0cL;MV(-1;0;y);MV(1;0;y)]}
+.fc(.ic("9b.test"));{.mi{.p(x);CMD(x@0;.rs(2_x));.rl()}:~.rl()}()
+.p("V")
+.p(?V)
+.p(#?V)
