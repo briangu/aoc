@@ -1,0 +1,26 @@
+L::0
+XL:::{}
+XL,0,#"Monkey "
+XL,1,#"  Starting items: "
+XL,2,#"  Operation: new = old "
+XL,3,#"  Test: divisible by "
+XL,4,#"    If true: throw to monkey "
+XL,5,#"    If false: throw to monkey "
+
+M:::{}
+MD::0
+MID::0
+
+TOA::{a::x;k::a?",";{.rs(x)}'({2#((x-2)_a)}'k),((-2)#a)}
+
+FL:::{}
+FL,0,{MID::.rs(,x@0);MD:::{};M,MID,MD}
+FL,1,{MD,:SI,,TOA(x)}
+FL,2,{MD,:OLD,0;MD,:OLDB,.rs(2_x);MD,:OLDO,x@0}
+FL,3,{MD,:DBY,.rs(x)}
+FL,4,{MD,:IFT,.rs(x)}
+FL,5,{MD,:IFF,.rs(x)}
+
+F::{f::FL?L;f((XL?L)_x);L::L+1}
+.fc(.ic("11.test"));{.mi{:[(#x)>0;F(x);L::0];.rl()}:~.rl()}();.p(M)
+
