@@ -26,14 +26,14 @@ FL,4,{MD,:IFT,.rs(x)}
 FL,5,{MD,:IFF,.rs(x)}
 
 F::{f::FL?L;f((XL?L)_x);L::L+1}
-.fc(.ic("11.test"));{.mi{:[(#x)>0;F(x);L::0];.rl()}:~.rl()}()
+.fc(.ic("11.txt"));{.mi{:[(#x)>0;F(x);L::0];.rl()}:~.rl()}()
 
 .p(M?0)
 .p(M?1)
 .p(M?2)
 .p(M?3)
 
-ROUND::{{INSPECT(x)}'!4};{x;ROUND()}'!20
+ROUND::{{INSPECT(x)}'!(#M)};{x;ROUND()}'!20
 
 .p("")
 .p(M?0)
