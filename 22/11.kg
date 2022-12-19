@@ -9,18 +9,41 @@ XL,5,#"    If false: throw to monkey "
 
 M:::{}
 MD::0
-MID::0
 
+DIVI::{(x%y)=(x:%y)}
 TOA::{a::x;k::a?",";{.rs(x)}'({2#((x-2)_a)}'k),((-2)#a)}
 
+NEXTOLD::{b:::[(y?:OLDB)=:old;x;(y?:OLDB)];:[(y?:OLDO)=0c+;x+b;x*b]:%3}
+NEXTM::{nm:::[DIVI(x;y);z?:IFT;z?:IFF];nmd::M?nm;nmd,:SI,,(nmd?:SI),x}
+INSPECT::{m::M?x;m,:CNT,((m?:CNT)+(#(m?:SI)));{o::NEXTOLD(x;m);NEXTM(o;(m?:DBY);m)}'(m?:SI);m,:SI,,[]}
+
 FL:::{}
-FL,0,{MID::.rs(,x@0);MD:::{};M,MID,MD}
+FL,0,{id::.rs(,x@0);MD:::{};MD,:CNT,0;M,id,MD}
 FL,1,{MD,:SI,,TOA(x)}
-FL,2,{MD,:OLD,0;MD,:OLDB,.rs(2_x);MD,:OLDO,x@0}
+FL,2,{MD,:OLDB,.rs(2_x);MD,:OLDO,x@0}
 FL,3,{MD,:DBY,.rs(x)}
 FL,4,{MD,:IFT,.rs(x)}
 FL,5,{MD,:IFF,.rs(x)}
 
 F::{f::FL?L;f((XL?L)_x);L::L+1}
-.fc(.ic("11.test"));{.mi{:[(#x)>0;F(x);L::0];.rl()}:~.rl()}();.p(M)
+.fc(.ic("11.test"));{.mi{:[(#x)>0;F(x);L::0];.rl()}:~.rl()}()
 
+.p(M?0)
+.p(M?1)
+.p(M?2)
+.p(M?3)
+
+ROUND::{{INSPECT(x)}'!4};{x;ROUND()}'!20
+
+.p("")
+.p(M?0)
+.p(M?1)
+.p(M?2)
+.p(M?3)
+
+.p("cnts")
+cnts::{(x@1)?:CNT}'M
+mc::cnts@2#>cnts
+.p(cnts)
+.p(mc)
+.p({x*y}:'mc)
