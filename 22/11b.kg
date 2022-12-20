@@ -34,7 +34,4 @@ DUMP::{.p(" ");.p(x);{.p((x@1))}'M}
 ROUND::{{INSPECT(x)}'!(#M);:[(DIVI(x;1000)|(x=20)|(x=1));DUMP(x);0]}'(1+!10000)
 
 .p("")
-DUMP()
-
-.p("")
 cnts::{(x@1)?:CNT}'M;mc::cnts@2#>cnts;.p({x*y}/mc)
