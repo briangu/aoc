@@ -1,4 +1,3 @@
-L::0
 XL:::{}
 XL,0,#"Monkey "
 XL,1,#"  Starting items: "
@@ -7,6 +6,7 @@ XL,3,#"  Test: divisible by "
 XL,4,#"    If true: throw to monkey "
 XL,5,#"    If false: throw to monkey "
 
+L::0
 M:::{}
 MD::0
 
