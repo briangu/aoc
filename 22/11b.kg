@@ -1,0 +1,40 @@
+L::0
+XL:::{}
+XL,0,#"Monkey "
+XL,1,#"  Starting items: "
+XL,2,#"  Operation: new = old "
+XL,3,#"  Test: divisible by "
+XL,4,#"    If true: throw to monkey "
+XL,5,#"    If false: throw to monkey "
+
+M:::{}
+MD::0
+
+DIVI::{(x%y)=(x:%y)}
+TOA::{a::x;k::a?",";{.rs(x)}'({2#((x-2)_a)}'k),((-2)#a)}
+
+NEXTOLD::{b:::[(y?:OLDB)=:old;x;(y?:OLDB)];:[(y?:OLDO)=0c+;x+b;x*b]}
+NEXTM::{nm:::[DIVI(x;y);z?:IFT;z?:IFF];nmd::M?nm;nmd,:SI,,(nmd?:SI),(x!CYCLE)}
+INSPECT::{m::M?x;m,:CNT,((m?:CNT)+(#(m?:SI)));{o::NEXTOLD(x;m);NEXTM(o;(m?:DBY);m)}'(m?:SI);m,:SI,,[]}
+
+FL:::{}
+FL,0,{id::.rs(,x@0);MD:::{};MD,:CNT,0;M,id,MD}
+FL,1,{MD,:SI,,TOA(x)}
+FL,2,{MD,:OLDB,.rs(2_x);MD,:OLDO,x@0}
+FL,3,{MD,:DBY,.rs(x)}
+FL,4,{MD,:IFT,.rs(x)}
+FL,5,{MD,:IFF,.rs(x)}
+
+F::{f::FL?L;f((XL?L)_x);L::L+1}
+.fc(.ic("11.txt"));{.mi{:[(#x)>0;F(x);L::0];.rl()}:~.rl()}()
+
+CYCLE::*/{(x@1)?:DBY}'M
+
+DUMP::{.p(" ");.p(x);{.p((x@1))}'M}
+ROUND::{{INSPECT(x)}'!(#M);:[(DIVI(x;1000)|(x=20)|(x=1));DUMP(x);0]}'(1+!10000)
+
+.p("")
+DUMP()
+
+.p("")
+cnts::{(x@1)?:CNT}'M;mc::cnts@2#>cnts;.p({x*y}/mc)
