@@ -1,63 +1,48 @@
-P::{(x@y)@z};AP::{(x@(y@1))@(y@0)}
-STARTV::-1;SPOS::[0 0];SETSTART::{SPOS::x,y;STARTV}
-ENDV::-2;EPOS::[0 0];SETEND::{EPOS::x,y;ENDV}
+STARTV::0;SPOS::[0 0];SETSTART::{SPOS::x,y;STARTV}
+ENDV::0;EPOS::[0 0];SETEND::{EPOS::x,y;ENDV}
 READ::{[R C];R::-1;{R::R+1;C::-1;{C::C+1;:[x=0cS;SETSTART(C;R):|x=0cE;SETEND(C;R);(#x)-#0ca]}'x}'.mi{x;.rl()}\~.rl()}
 .fc(.ic("12.test"));G::READ();GH::#G;GW::#G@0
-.p(G);.p(SPOS);.p(EPOS);.p(AP(G;SPOS))
+AP::{(x@(y@1))@(y@0)}
+V::{x;GW#[0]}'!GH
+.p(V)
+.p(G);.p(GW);.p(GH);.p(SPOS);.p(EPOS);.p(AP(G;SPOS))
 
-N::{d:::{};d,:g,0;d,:f,0;d,:p,x;d,:pos,,y}
-EQPOS::{(x?:pos)=(y?:pos)}
+Q::,(,SPOS),0;NEXTQ::{[m];m::Q@0;Q::1_Q;m};ADDQ::{[a];a::(,x),y;.d("ADDQ: ");.p(a);Q::Q,,a;1}
+HV::{.d("HV ");.p(x);AP(V;x)=99};ADDV::{V::V:-99,(x@1),(x@0);.p(V)}
+ISGOAL::{((x@0)=(EPOS@0))&((x@1)=(EPOS@1))}
+INRANGE::{[a b];.d("INRANGE: ");.d(x);.d(" o=");a::x@0;b::x@1;o::(a>(-1))&(a<GW)&(b>(-1))&(b<GH);.p(o);o}
+DELTA::{.d("DELTA: ");.d(x,y);.d(" O:");o::AP(G;y)-AP(G;x);.p(o);o}
+TRYADD::{.d("TRYADD: X: ");.d(x);.d(" Y: ");.d(y);.d(" Z: ");.d(z);:[INRANGE(x);:[(DELTA(z;x)<2)&(~HV(x));ADDQ(x;y);0];0]}
+EXPLORE::{[q b];q::x;b::y+1;{TRYADD(q+x;b;q)}'[[0 1] [0 -1] [1 0] [-1 0]];(#Q)>0}
+BESTF::10^9
+FINISH::{.d("FINISH: ");.p(x+1);BESTF:::[(x+1)<BESTF;(x+1);BESTF];1}
+ITER::{C::NEXTQ();.d("C: ");.p(C);pos::C@0;steps::C@1;:[INRANGE(pos);:[~HV(pos);ADDV(pos);0];0];:[ISGOAL(pos);FINISH(steps);EXPLORE(pos;steps)]}
 
-START::N(0;SPOS)
-END::N(0;EPOS)
-OPEN::,START
-CLOSED::[]
-
-CHEAPEST::{m::OPEN@<{x?:f}'OPEN;OPEN::1_m;m@0}
-ISGOAL::{p::(x?:pos);goal::((p@0)=(EPOS@0))&((p@1)=(EPOS@1));.p("IS GOAL",p,,goal);goal}
-
-BUILDPATH::{.d("BUIDLPATH: ");.p(x);0}
-
-INRANGE::{.d("INRANGE: ");a::x@0;b::x@1;o::(a>(-1))&(a<GW)&(b>(-1))&(b<GH);.p(x,o);o}
-DELTA::{.d("DELTA: ");.d(x,y);o:::[(y~SPOS)|(y~EPOS);0;#(AP(G;x)-AP(G;y))];.p(o);o}
-VISITED::{.d("VISITED: ");.d(x);.d(" ");.d(CLOSED);a::x;b::+/{a~x}'CLOSED;.p(b);b>0}
-CANADD::{.d("CANADD: ");.p(x,,y);:[INRANGE(y);(DELTA(x;y)<2)&(~VISITED(y));0]}
-
-H::{(((x@0)-(EPOS@0))^2)+(((x@1)-(EPOS@1))^2)}
-ADDN::{.d("ADD ");.p(y);n::N(x;y);ng::(x?:g)+1;n,:g,ng;n,:f,ng+H(y);.p(,,n);OPEN::OPEN,,n;n}
-TRYADD::{.p("");.d("TRY: ");.p(y);:[CANADD(y;z);ADDN(x;z);0]}
-EXPLORE::{.d("exploring: ");.p(x);n::x;h::x?:pos;{TRYADD(n;h;h+x)}'[[0 1] [0 -1] [1 0] [-1 0]];(#OPEN)>0}
-
-ITER::{C::CHEAPEST();.p("");.d("CHEAPEST: ");.p(C);CLOSED::CLOSED,,(C?:pos);:[ISGOAL(C);BUILDPATH(C);EXPLORE(C)]}
-
-.p("OPEN:")
-.p(OPEN)
-.p("CLOSED:")
-.p(CLOSED)
+DCRT::{{{.d(:#(x+(#0ca)));.d(" ")}'(G@x);.p("")}'!GH}
+DCRT()
 
 {x}{x;ITER()}:~1
+
+
+DCRT()
+.p(BESTF)
 
 .comment("HOLD")
 
 ITER()
-.p("OPEN:")
-.p(OPEN)
-.p("CLOSED:")
-.p(CLOSED)
-ITER()
-.p("OPEN:")
-.p(OPEN)
-.p("CLOSED:")
-.p(CLOSED)
+.p("Q")
+.p(Q)
+.p("V")
+.p(V)
 
-ITER()
-.p("OPEN:")
-.p(OPEN)
-.p("CLOSED:")
-.p(CLOSED)
+{x}{x;ITER()}:~1
 
-RUN::{{x;ITER()&((#OPEN)>0)}{x}:~0}
-RUN()
+.p(G)
+DCRT()
+{G::G:-x,((PATH@x)@1),((PATH@x)@0)}'!#PATH
+G::G:-25,(SPOS@1),(SPOS@0)
+.p("")
+DCRT()
+.p(#PATH)
 
 HOLD
-
