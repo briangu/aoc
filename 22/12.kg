@@ -1,11 +1,10 @@
-STARTV::0;SPOS::[0 0];SETSTART::{SPOS::x,y;STARTV}
-ENDV::0;EPOS::[0 0];SETEND::{EPOS::x,y;ENDV}
+SPOS::[0 0];SETSTART::{SPOS::x,y;0}
+EPOS::[0 0];SETEND::{EPOS::x,y;25}
 READ::{[R C];R::-1;{R::R+1;C::-1;{C::C+1;:[x=0cS;SETSTART(C;R):|x=0cE;SETEND(C;R);(#x)-#0ca]}'x}'.mi{x;.rl()}\~.rl()}
 .fc(.ic("12.test"));G::READ();GH::#G;GW::#G@0
 AP::{(x@(y@1))@(y@0)}
 V::{x;GW#[0]}'!GH
-.p(V)
-.p(G);.p(GW);.p(GH);.p(SPOS);.p(EPOS);.p(AP(G;SPOS))
+.p(V);.p(G);.p(GW);.p(GH);.p(SPOS);.p(EPOS);.p(AP(G;SPOS))
 
 Q::,(,SPOS),0;NEXTQ::{[m];m::Q@0;Q::1_Q;m};ADDQ::{[a];a::(,x),y;.d("ADDQ: ");.p(a);Q::Q,,a;1}
 HV::{.d("HV ");.p(x);AP(V;x)=99};ADDV::{V::V:-99,(x@1),(x@0);.p(V)}
@@ -15,34 +14,16 @@ DELTA::{.d("DELTA: ");.d(x,y);.d(" O:");o::AP(G;y)-AP(G;x);.p(o);o}
 TRYADD::{.d("TRYADD: X: ");.d(x);.d(" Y: ");.d(y);.d(" Z: ");.d(z);:[INRANGE(x);:[(DELTA(z;x)<2)&(~HV(x));ADDQ(x;y);0];0]}
 EXPLORE::{[q b];q::x;b::y+1;{TRYADD(q+x;b;q)}'[[0 1] [0 -1] [1 0] [-1 0]];(#Q)>0}
 BESTF::10^9
-FINISH::{.d("FINISH: ");.p(x+1);BESTF:::[(x+1)<BESTF;(x+1);BESTF];1}
+FINISH::{.d("FINISH: ");.p(x);BESTF:::[x<BESTF;x;BESTF];(#Q)>0}
 ITER::{C::NEXTQ();.d("C: ");.p(C);pos::C@0;steps::C@1;:[INRANGE(pos);:[~HV(pos);ADDV(pos);0];0];:[ISGOAL(pos);FINISH(steps);EXPLORE(pos;steps)]}
 
-DCRT::{{{.d(:#(x+(#0ca)));.d(" ")}'(G@x);.p("")}'!GH}
-DCRT()
+DCRT::{[a];a::x;{.d(a@x);.p("")}'!GH}
+DCRT::{[a];a::x;{{.d(:#(x+(#0ca)));.d(" ")}'(a@x);.p("")}'!GH}
+DCRT(G)
 
 {x}{x;ITER()}:~1
 
-
-DCRT()
+DCRT(G)
+DCRT(V)
 .p(BESTF)
 
-.comment("HOLD")
-
-ITER()
-.p("Q")
-.p(Q)
-.p("V")
-.p(V)
-
-{x}{x;ITER()}:~1
-
-.p(G)
-DCRT()
-{G::G:-x,((PATH@x)@1),((PATH@x)@0)}'!#PATH
-G::G:-25,(SPOS@1),(SPOS@0)
-.p("")
-DCRT()
-.p(#PATH)
-
-HOLD
