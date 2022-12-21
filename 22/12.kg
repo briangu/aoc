@@ -6,16 +6,16 @@ AP::{(x@(y@1))@(y@0)}
 V::{x;GW#[0]}'!GH
 .p(V);.p(G);.p(GW);.p(GH);.p(SPOS);.p(EPOS);.p(AP(G;SPOS))
 
-Q::,(,SPOS),0;NEXTQ::{[m];m::Q@0;Q::1_Q;m};ADDQ::{[a];a::(,x),y;.d("ADDQ: ");.p(a);Q::Q,,a;1}
-HV::{.d("HV ");.p(x);AP(V;x)=99};ADDV::{V::V:-99,(x@1),(x@0);.p(V)}
+Q::,(,SPOS),0;NEXTQ::{[m];m::Q@0;Q::1_Q;m};ADDQ::{[a];a::(,x),y;Q::Q,,a;1}
+HV::{AP(V;x)=99};ADDV::{V::V:-99,(x@1),(x@0)}
 ISGOAL::{((x@0)=(EPOS@0))&((x@1)=(EPOS@1))}
-INRANGE::{[a b];.d("INRANGE: ");.d(x);.d(" o=");a::x@0;b::x@1;o::(a>(-1))&(a<GW)&(b>(-1))&(b<GH);.p(o);o}
-DELTA::{.d("DELTA: ");.d(x,y);.d(" O:");o::AP(G;y)-AP(G;x);.p(o);o}
-TRYADD::{.d("TRYADD: X: ");.d(x);.d(" Y: ");.d(y);.d(" Z: ");.d(z);:[INRANGE(x);:[(DELTA(z;x)<2)&(~HV(x));ADDQ(x;y);0];0]}
+INRANGE::{[a b];a::x@0;b::x@1;(a>(-1))&(a<GW)&(b>(-1))&(b<GH)}
+DELTA::{AP(G;y)-AP(G;x)}
+TRYADD::{:[INRANGE(x);:[(DELTA(z;x)<2)&(~HV(x));ADDQ(x;y);0];0]}
 EXPLORE::{[q b];q::x;b::y+1;{TRYADD(q+x;b;q)}'[[0 1] [0 -1] [1 0] [-1 0]];(#Q)>0}
 BESTF::10^9
 FINISH::{.d("FINISH: ");.p(x);BESTF:::[x<BESTF;x;BESTF];(#Q)>0}
-ITER::{C::NEXTQ();.d("C: ");.p(C);pos::C@0;steps::C@1;:[INRANGE(pos);:[~HV(pos);ADDV(pos);0];0];:[ISGOAL(pos);FINISH(steps);EXPLORE(pos;steps)]}
+ITER::{C::NEXTQ();pos::C@0;steps::C@1;:[INRANGE(pos);:[~HV(pos);ADDV(pos);0];0];:[ISGOAL(pos);FINISH(steps);EXPLORE(pos;steps)]}
 
 DCRT::{[a];a::x;{.d(a@x);.p("")}'!GH}
 DCRT::{[a];a::x;{{.d(:#(x+(#0ca)));.d(" ")}'(a@x);.p("")}'!GH}
