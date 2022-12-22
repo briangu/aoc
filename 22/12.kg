@@ -6,24 +6,17 @@ AP::{x:@(y@1),(y@0)}
 V::{x;GW#[0]}'!GH
 
 QN::{[a];a:::{};a,:pos,,x;a,:step,y;a,:next,z;a}
-SETQ::{Q::x;QT::x}
-QT::0
-Q::0
-SETQ(QN(SPOS;0;0))
-MORE::{~Q~0}
-NEXTQ::{[m];m::Q;Q::Q?:next;:[Q~0;QT::0;0];m}
-UPDT::{QT,:next,x;QT::x}
+Q::0;QT::0;SETQ::{Q::x;QT::x};SETQ(QN(SPOS;0;0));MORE::{~Q~0}
+NEXTQ::{[m];m::Q;Q::Q?:next;:[Q~0;QT::0;0];m};UPDT::{QT,:next,x;QT::x}
 ADDQ::{[q];q::QN(x;y;0);:[Q~0;SETQ(q);UPDT(q)];1}
 
-HV::{AP(V;x)=99};ADDV::{V::V:-99,|x}
-CANVISIT::{:[((#(x?-1))=0)&((x@0)<GW)&((x@1)<GH);:[~(AP(V;x)=99);1;0];0]}
+ADDV::{V::V:-99,|x};CANVISIT::{:[((#(x?-1))=0)&((x@0)<GW)&((x@1)<GH);:[~(AP(V;x)=99);1;0];0]}
 TRYADD::{:[CANVISIT(x);:[((AP(G;x)-AP(G;z))<2);ADDQ(x;y);0];0]}
 EXPLORE::{[q b];q::x;b::y+1;{TRYADD(q+x;b;q)}'[[0 1] [0 -1] [1 0] [-1 0]];MORE()}
-BESTF::10^9
-FINISH::{.d("FINISH: ");.p(x);BESTF:::[x<BESTF;x;BESTF];MORE()}
-ITER::{[C p s v];C::NEXTQ();p::C?:pos;s::C?:step;v:::[CANVISIT(p);ADDV(p);0];:[v;:[p~EPOS;FINISH(s);EXPLORE(p;s)];MORE()]}
+BESTF::10^9;FINISH::{.d("FINISH: ");.p(x);BESTF:::[x<BESTF;x;BESTF];MORE()}
+VISIT::{ADDV(x);:[p~EPOS;FINISH(y);EXPLORE(x;y)]}
+ITER::{[C p];C::NEXTQ();p::C?:pos;:[CANVISIT(p);VISIT(p;C?:step);MORE()]}
 
-DCRT::{[a];a::x;{.d(a@x);.p("")}'!GH}
 DCRT::{[a];a::x;{{.d(:#(x+(#0ca)));.d(" ")}'(a@x);.p("")}'!GH}
 DCRT(G);.p(GW);.p(GH);.p(SPOS);.p(EPOS)
 
