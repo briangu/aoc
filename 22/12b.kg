@@ -3,24 +3,32 @@ EPOS::[0 0];SETEND::{EPOS::x,y;25}
 READ::{[R C];R::-1;{R::R+1;C::-1;{C::C+1;:[x=0cS;SETSTART(C;R):|x=0cE;SETEND(C;R);(#x)-#0ca]}'x}'.mi{x;.rl()}\~.rl()}
 .fc(.ic("12.txt"));G::READ();GH::#G;GW::#G@0
 AP::{x:@(y@1),(y@0)}
-V::{x;GW#[0]}'!GH
+V::0;RESETV::{V::{x;GW#[0]}'!GH}
 
 QN::{[a];a:::{};a,:pos,,x;a,:step,y;a,:next,z;a}
-Q::0;QT::0;SETQ::{Q::x;QT::x};SETQ(QN(SPOS;0;0));MORE::{~Q~0}
+Q::0;QT::0;SETQ::{Q::x;QT::x};MORE::{~Q~0}
 NEXTQ::{[m];m::Q;Q::Q?:next;:[Q~0;QT::0;0];m};UPDT::{QT,:next,x;QT::x}
 ADDQ::{[q];q::QN(x;y;0);:[Q~0;SETQ(q);UPDT(q)];1}
 
 ADDV::{V::V:-99,|x};CANVISIT::{:[((#(x?-1))=0)&((x@0)<GW)&((x@1)<GH);:[~(AP(V;x)=99);1;0];0]}
 TRYADD::{:[CANVISIT(x);:[((AP(G;x)-AP(G;z))<2);ADDQ(x;y);0];0]}
 EXPLORE::{[q b];q::x;b::y+1;{TRYADD(q+x;b;q)}'[[0 1] [0 -1] [1 0] [-1 0]];MORE()}
-BESTF::10^9;FINISH::{.d("FINISH: ");.p(x);BESTF:::[x<BESTF;x;BESTF];MORE()}
+BESTF::10^9;RESETF::{BESTF::10^9};FINISH::{.d("FINISH: ");.p(x);BESTF:::[x<BESTF;x;BESTF];MORE()}
 VISIT::{ADDV(x);:[x~EPOS;FINISH(y);EXPLORE(x;y)]}
 ITER::{[C p];C::NEXTQ();p::C?:pos;:[CANVISIT(p);VISIT(p;C?:step);MORE()]}
 
 DCRT::{[a];a::x;{{.d(:#(x+(#0ca)));.d(" ")}'(a@x);.p("")}'!GH}
-DCRT(G);.p(GW);.p(GH);.p(SPOS);.p(EPOS)
+DCRT(G);.p(GW);.p(GH)
 
-{x}{x;ITER()}:~1
+.d("EPOS: ");.p(EPOS)
 
-.p(BESTF)
+RESET::{RESETF();RESETV();SETQ(QN(SPOS;0;0))}
 
+:"BUG IN KLONGPY REQUIRES q"
+RUNX::{[q];q::x;{x;ITER()}{x}:~ITER()}
+SCAN::{RESET();RUNX(1);BESTF}
+
+SCANROW::{[a r];a::x;r::{SPOS::x,a;SCAN()}'((G@x)?0);*r@<r}
+
+RESULTS::SCANROW'!GH
+.p(*RESULTS@<RESULTS)
