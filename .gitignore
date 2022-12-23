@@ -1,4 +1,5 @@
 *.txt
+*.raw
 .vscode/
 
 # Byte-compiled / optimized / DLL files
