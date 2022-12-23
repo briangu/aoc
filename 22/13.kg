@@ -1,15 +1,7 @@
-
 EA::{:[@x;((^,x)~[1 0]);0]}
-AA::{(~@x)|EA(x)}
-DI::{:[@x;((^,x)~[1]);0]}
-PI::{,x}
-LE::{(x<y)|(x=y)}
-
-ORDERED::{[o t];.d("ORDERED: ");.d(x);o::x?0;t::x?1;:[@o;1;:[@t;0;(o@0)>(t@(-1))]]}
-ALL::{.d("ALL: ");.d(x);.d(" ");o::@x?0;.p(o);o}
-
-C::{[r];r::x Q'y;.d("C: r ");.p(r);:[(#x)=(#y);ALL(r);:[ALL(r);LE(#x;#y);ORDERED(r)]]}
-Q::{.d("X: ");.d(x);.d(" Y: ");.p(y);o:::[DI(x)&DI(y);LE(x;y):|DI(x)&AA(y);C(PI(x);y):|AA(x)&DI(y);C(x;PI(y));C(x;y)];.d(x);.d(" Y: ");.d(y);.d(" O: ");.p(o);o}
+DI::{:[@x;((^,x)~[1]);0]};UG::{:[DI(x);,x;x]}
+C::{:[DI(x)&DI(y);:[x<y;2:|x>y;0;1];Q(UG(x);UG(y))]}
+Q::{[a b i j s];.d(x);.d(" ");.d(y);a::x;b::y;i::0;j::0;s::{i::i+1;j::j+1;(i<#a)&(j<#b)&(x=1)}{x;C(a@i;b@j)}:~C(a@i;b@j);:[s=1;:[(#a)<(#b);2:|(#a)>(#b);0;1];s]}
 
 F::{.p("");.p(x);[a b];Q(.rs(x@0);.rs(x@1))}
 .fc(.ic("13.test"));PAIR::{{(#x)>0}{x;.rl()}\~.rl()};o::F'.mi{x;PAIR()}\~PAIR();.d("DONE: ");.p(o)
@@ -19,14 +11,8 @@ u::1+o?1
 .p(+/u)
 
 
+
 .comment("TESTS")
-5292
-
-CA::{[a b r];m::(#x)&(#y);r::(m#x) Q'(m#y);:[(#x)=(#y);ALL(r);:ORDERED(r)]}
-C::{[a b];a::?x;b::?y;:[(~EA(*a))&(~EA(*b))&(a~b);LE((#x);(#y));CA(x;y)]}
-C::{:[((?x)~(?y))&((#^x)=1)&((#^y)=1);LE((#x);(#y));CA(x;y)]}
-Q::{.d("X: ");.d(x);.d(" Y: ");.p(y);o:::[DI(x)&DI(y);LE(x;y):|DI(x)&AA(y);C(PI(x);y):|AA(x)&DI(y);C(x;PI(y));C(x;y)];.d("X: ");.d(x);.d(" Y: ");.d(y);.d(" O: ");.p(o);o}
-
 
 Q([1 1 3 1 1];[1 1 5 1 1])
 Q([[1] [2 3 4]];[[1] 4])
