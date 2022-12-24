@@ -4,3 +4,12 @@ PR::{[a b c];a::x;b::(x?"->");c::(0,2+b) {PP((y-x)#((x)_a))}'(b,#x)}
 
 {.p(x)}'ROWS
 
+MAP:::{}
+SP::{[a b];a::x@0;b::x@1;:[:_MAP?a;MAP,a,:{};MAP?a],b,y}
+VLINE::{}
+HLINE::{:[x>y;;]}
+LINE::{:[(x@0)=(y@0);HLINE(x@0;x@1;y@1);VLINE(x@1;x@0;y@0)]}
+RUN::{{LINE(x;y)}:'x}
+{RUN(x)}'ROWS
+
+.p(MAP)
