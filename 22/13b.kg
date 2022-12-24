@@ -1,0 +1,21 @@
+DI::{:[@x;((^,x)~[1]);0]};UG::{:[DI(x);,x;x]};C::{:[DI(x)&DI(y);:[x<y;2:|x>y;0;1];Q(UG(x);UG(y))]}
+Q::{[a b i j s];a::x;b::y;i::-1;j::-1;s::{i::i+1;j::j+1;(i<#a)&(j<#b)&(x=1)}{x;C(a@i;b@j)}:~1;:[s=1;:[(#a)<(#b);2:|(#a)>(#b);0;1];s]}
+
+:"Bubblesort - 'a' is updated in SWAP"
+LE::Q;SWAP::{[c];c::a@y;a::x:=(,(x@z)),y;a::a:=(,c),z;1}
+SCAN::{[o];o::{:[LE((a@x);(a@y));SWAP(a;x;y);0]}:'!#a;~@o?1}
+B::{[a s];a::x;{x;SCAN(a)}{x}:~1;|a}
+
+.fc(.ic("13.txt"));PAIR::{{(#x)>0}{x;.rl()}\~.rl()};ROWS::{.rs(x)}',/.mi{x;PAIR()}\~PAIR()
+ROWS::ROWS,,[[6]];ROWS::ROWS,,[[2]]
+ROWS::B(ROWS)
+
+.p(*/1+(ROWS?[[6]]),(ROWS?[[2]]))
+
+
+.comment("Bubblesort")
+:"Bubblesort"
+LE::{(x<y)|(x=y)};SWAP::{[a c];a::x;c::a@y;a::a:-(x@z),y;a::a:-c,z;1}
+SCAN::{[a o];a::x;o::{:[LE((a@x);(a@y));SWAP(a;x;y);0]}:'!#a;~@o?1}
+B::{[a s];a::x;{x;SCAN(a)}{x}:~1}
+Bubblesort
