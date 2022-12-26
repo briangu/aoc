@@ -1,15 +1,13 @@
-PP::{.rs("[",(x:=" ",x?","),"]")}
-PR::{[a b c];a::x;b::(x?"->");c::(0,2+b) {PP((y-x)#((x)_a))}'(b,#x)}
+PP::{.rs("[",(x:=" ",x?","),"]")};PR::{[a b c];a::x;b::(x?"->");c::(0,2+b) {PP((y-x)#((x)_a))}'(b,#x)}
 .fc(.ic("14.test"));ROWS::PR'.mi{x;.rl()}\~.rl()
 
 {.p(x)}'ROWS
 
-MAP:::{}
-SP::{.d(x);.d(" ");.p(y);:[:_MAP?x;MAP,x,:{};MAP?x],y,z}
-VLINE::{[a s m];a::x;s::y&z;m::y|z;{SP(x;a;1)}'s+!((m+1)-s)}
-HLINE::{[a s m];a::x;s::y&z;m::y|z;{SP(a;x;1)}'s+!((m+1)-s)}
-LINE::{:[(x@0)=(y@0);HLINE(x@0;x@1;y@1);VLINE(x@1;x@0;y@0)]}
+MAP:::{};SP::{:[:_MAP?x;(MAP,x,:{})?x;MAP?x],y,z}
+VLINE::{[a];a::x;{SP(x;a;1)}'y+!((z+1)-y)};HLINE::{[a];a::x;{SP(a;x;1)}'y+!((z+1)-y)}
+LINE::{:[(x@0)=(y@0);HLINE(x@0;(x@1)&(y@1);(x@1)|(y@1));VLINE(x@1;(x@0)&(y@0);(x@0)|(y@0))]}
 RUN::{{LINE(x;y)}:'x}
 {RUN(x)}'ROWS
 
 .p(MAP)
+
