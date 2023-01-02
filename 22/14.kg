@@ -1,8 +1,6 @@
 PP::{.rs("[",(x:=" ",x?","),"]")};PR::{[a b c];a::x;b::(x?"->");c::(0,2+b) {PP((y-x)#((x)_a))}'(b,#x)}
 .fc(.ic("14.txt"));ROWS::PR'.mi{x;.rl()}\~.rl()
 
-{.p(x)}'ROWS
-
 MINX::100000;MAXX::0;MAXY::0
 SETXB::{:[x<MINX;MINX::x:|x>MAXX;MAXX::x;x]}
 SETYB::{:[x>MAXY;MAXY::x;x]}
@@ -12,25 +10,22 @@ LINE::{:[(x@0)=(y@0);HLINE(x@0;(x@1)&(y@1);(x@1)|(y@1));VLINE(x@1;(x@0)&(y@0);(x
 RUN::{{LINE(x;y)}:'x}
 {RUN(x)}'ROWS
 
-.p(MAP)
-.p(MINX,MAXX,MAXY)
+DP::{[a];a::GP(x;y);:[a=0;.d("."):|a=1;.d("#");.d("o")]}
+DROW::{[a];a::x;{DP(MINX+x;a)}'!((MAXX+1)-MINX);.p("")}
+DRAW::{DROW'!(MAXY+1)}
 
 GP::{:[:_MAP?x;0;:[:_(MAP?x)?y;0;(MAP?x)?y]]}
 EMPTY::{GP(x;y)=0}
 BLOCKED::{~EMPTY(x;y)}
 TRAPPED::{BLOCKED(x;y+1)&BLOCKED(x+1;y+1)&BLOCKED(x-1;y+1)}
 CNT::0
-REST::{CNT::CNT+1;.p(CNT);SP(x;y;2);0}
+REST::{CNT::CNT+1;SP(x;y;2);0}
 OOB::{(x<MINX)|(x>MAXX)|(y>MAXY)}
 FALL::{[a b q];a::x;b::y;{x;:[OOB(a;b);0;:[TRAPPED(a;b);REST(a;b);1]]}{x;q:::[EMPTY(a;b+1);a,(b+1):|EMPTY(a-1;b+1);(a-1),(b+1);(a+1),(b+1)];a::q@0;b::q@1}:~0;~OOB(a;b)}
 
-DP::{[a];a::GP(x;y);:[a=0;.d("."):|a=1;.d("#");.d("o")]}
-DROW::{[a];a::x;{DP(MINX+x;a)}'!((MAXX+1)-MINX);.p("")}
-DRAW::{DROW'!(MAXY+1)}
-
+.p(MINX,MAXX,MAXY)
+.p("");DRAW();
 .p({x;FALL(500;0)}{x}:~0)
-.p({x;FALL(500;0)}{.p("");DRAW();x}:~0)
-.p(c)
 .p("");DRAW();
 .p(CNT)
 
