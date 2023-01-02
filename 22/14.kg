@@ -20,14 +20,15 @@ EMPTY::{GP(x;y)=0}
 BLOCKED::{~EMPTY(x;y)}
 TRAPPED::{BLOCKED(x;y+1)&BLOCKED(x+1;y+1)&BLOCKED(x-1;y+1)}
 CNT::0
-REST::{CNT::CNT+1;SP(x;y;2);1}
+REST::{CNT::CNT+1;.p(CNT);SP(x;y;2);0}
 OOB::{(x<MINX)|(x>MAXX)|(y>MAXY)}
-FALL::{.p(x,y);:[OOB(x;y);0;:[TRAPPED(x;y);REST(x;y):|:EMPTY(x;y+1);FALL(x;y+1):|EMPTY(x-1;y+1);FALL(x-1;y+1);FALL(x+1;y+1)]]}
+FALL::{[a b q];a::x;b::y;{x;:[OOB(a;b);0;:[TRAPPED(a;b);REST(a;b);1]]}{x;q:::[EMPTY(a;b+1);a,(b+1):|EMPTY(a-1;b+1);(a-1),(b+1);(a+1),(b+1)];a::q@0;b::q@1}:~0;~OOB(a;b)}
 
 DP::{[a];a::GP(x;y);:[a=0;.d("."):|a=1;.d("#");.d("o")]}
 DROW::{[a];a::x;{DP(MINX+x;a)}'!((MAXX+1)-MINX);.p("")}
 DRAW::{DROW'!(MAXY+1)}
 
+.p({x;FALL(500;0)}{x}:~0)
 .p({x;FALL(500;0)}{.p("");DRAW();x}:~0)
 .p(c)
 .p("");DRAW();
