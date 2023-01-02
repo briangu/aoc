@@ -24,11 +24,7 @@ OOB::{(x<MINX)|(x>MAXX)|(y>MAXY)}
 FALL::{[a b q];a::x;b::y;{x;:[OOB(a;b);0;:[TRAPPED(a;b);REST(a;b);1]]}{x;q:::[EMPTY(a;b+1);a,(b+1):|EMPTY(a-1;b+1);(a-1),(b+1);(a+1),(b+1)];a::q@0;b::q@1}:~0;~OOB(a;b)}
 
 .p(MINX,MAXX,MAXY)
-.p("");DRAW();
+.p("");DRAW()
 .p({x;FALL(500;0)}{x}:~0)
-.p("");DRAW();
+.p("");DRAW()
 .p(CNT)
-
-
-.comment("HOLD")
-HOLD
