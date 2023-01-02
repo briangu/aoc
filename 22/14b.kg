@@ -1,5 +1,5 @@
 PP::{.rs("[",(x:=" ",x?","),"]")};PR::{[a b c];a::x;b::(x?"->");c::(0,2+b) {PP((y-x)#((x)_a))}'(b,#x)}
-.fc(.ic("14.test"));ROWS::PR'.mi{x;.rl()}\~.rl()
+.fc(.ic("14.txt"));ROWS::PR'.mi{x;.rl()}\~.rl()
 
 MINX::100000;MAXX::0;MAXY::0
 SETXB::{:[x<MINX;MINX::x:|x>MAXX;MAXX::x;x]}
@@ -23,12 +23,12 @@ TRAPPED::{BLOCKED(x;y+1)&BLOCKED(x+1;y+1)&BLOCKED(x-1;y+1)}
 CNT::0
 REST::{CNT::CNT+1;SP(x;y;2);0}
 FULL::{~EMPTY(500;0)}
-FALL::{[a b q];a::x;b::y;{x;:[FULL();0;:[TRAPPED(a;b);REST(a;b);1]]}{x;q:::[EMPTY(a;b+1);a,(b+1):|EMPTY(a-1;b+1);(a-1),(b+1);(a+1),(b+1)];a::q@0;b::q@1}:~0;~FULL()}
+FALL::{[a b q];a::x;b::y;{x;:[TRAPPED(a;b);REST(a;b);1]}{x;q:::[EMPTY(a;b+1);a,(b+1):|EMPTY(a-1;b+1);(a-1),(b+1);(a+1),(b+1)];a::q@0;b::q@1}:~0;1}
 
 .p(MINX,MAXX,MAXY)
 .p(BLOCKED(500;MAXY+2))
 .p("");DRAW();
-.p({x;FALL(500;0)}{x}:~0)
+.p({x;:[FULL();0;FALL(500;0)]}{x}:~0)
 .p("");DRAW();
 .p(CNT)
 
