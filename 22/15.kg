@@ -1,5 +1,5 @@
 SX::{.rs((2+(x?"x")@0)_x)};SY::{.rs((2+(x?"y")@0)_x)};BX::{.rs((2+(x?"x")@1)_x)};BY::{.rs((2+(x?"y")@1)_x)}
-PR::{(,SX(x),SY(x)),,BX(x),BY(x)}
+PR::{SX(x),SY(x),BX(x),BY(x)}
 .fc(.ic("15.test"));ROWS::PR'.mi{x;.rl()}\~.rl()
 .p(ROWS)
 
@@ -8,7 +8,7 @@ SETXB::{:[x<MINX;MINX::x:|x>MAXX;MAXX::x;x]}
 SETYB::{:[x>MAXY;MAXY::x;x]}
 MAP:::{};SP::{SETXB(x);SETYB(y);:[:_MAP?x;(MAP,x,:{})?x;MAP?x],y,z}
 H::{(x@y)@z}
-F::{SP(H(x;0;0);H(x;0;1);1);SP(H(x;1;0);H(x;1;1);2)}
+F::{SP(x@0;x@1;1);SP(x@2;x@3;2)}
 F'ROWS
 
 GP::{:[:_MAP?x;0;:[:_(MAP?x)?y;0;(MAP?x)?y]]}
@@ -16,5 +16,10 @@ DP::{[a];a::GP(x;y);:[a=0;.d("."):|a=1;.d("S");.d("B")]}
 DROW::{[a];a::x;{DP(MINX+x;a)}'!((MAXX+1)-MINX);.p("")}
 DRAW::{DROW'!(MAXY+1)}
 
+SMAP:::{};SSP::{:[:_SMAP?x;(SMAP,x,:{})?x;SMAP?x],y,z}
+MD::{(#((x@0)-(x@2)))+#((x@1)-(x@3))}
+G::{[a];a::MD(x);a}
+
 .p(MAP)
 .p("");DRAW()
+.p(G'ROWS)
