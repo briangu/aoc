@@ -1,0 +1,20 @@
+.l("common.kg")
+
+numbers:::{}
+numbers,"one",,"1  "
+numbers,"two",,"2  "
+numbers,"three",,"3    "
+numbers,"four",,"4   "
+numbers,"five",,"5   "
+numbers,"six",,"6  "
+numbers,"seven",,"7    "
+numbers,"eight",,"8    "
+numbers,"nine",,"9   "
+
+filter::{.rs(x@(((ISN'x)?1)@[0 -1]))}
+preprocess::{[p];.p(x);p::x;{[q];q::x@0;{p::p:=(numbers?q),,x}'p?q}'numbers;.p(p);p}
+
+readlines::{.mi{x;.rl()}\~.rl()}
+main::{.fc(.ic(.os.argv@0));{filter(preprocess(x))}'readlines()}
+.p(+/main())
+

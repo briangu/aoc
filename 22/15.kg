@@ -18,8 +18,14 @@ DRAW::{DROW'!(MAXY+1)}
 
 SMAP:::{};SSP::{:[:_SMAP?x;(SMAP,x,:{})?x;SMAP?x],y,z}
 MD::{(#((x@0)-(x@2)))+#((x@1)-(x@3))}
-G::{[a];a::MD(x);a}
+G::{[a b];a::MD(x);b::x;{SSP((b@0)+x;(b@1)+(a-x);1)}'!(a+1)}
+
+RCHK::{[a b];a::x;b::y;:[+/{MD(a;b;x@0;x@1)<1+(x@4)}'z;1;0]}}
+CHKROW::{[a b];a::x;b::y;{:[GP(MINX+x;a);1;RCHK(MINX+x;a;b)]}'!((MAXX+1)-MINX)}
 
 .p(MAP)
 .p("");DRAW()
-.p(G'ROWS)
+.p("hello")
+MDR::{x,MD(x)}'ROWS
+.p(MDR)
+.p("");.p(RCHK(MINX;10;MDR))

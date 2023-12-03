@@ -1,0 +1,6 @@
+.l("common.kg")
+
+filter::{.rs(x@(((ISN'x)?1)@[0 -1]))}
+readlines::{.mi{x;.rl()}\~.rl()}
+main::{.fc(.ic(.os.argv@0));filter'readlines()}
+.p(+/main())
