@@ -1,0 +1,18 @@
+.l("common.kg")
+
+setmax::{[v];v::.rs(y);:[:_x?z;x,z,v;:[v>(x?z);x,z,v;0]]}
+color::{[u];u::SPLIT(y;" ");setmax(x;u@-2;u@-1)}
+pull::{[p s];p::x;s::y;color(p;)'SPLIT(s;",")}
+parsepulls::{[p k u];p:::{};k::";";pull(p;)'SPLIT(x;k);p}
+
+gameid::{SPLIT(x;" ")@1}
+
+parse::{[d s id p u];d::x;s::y;u::SPLIT(s;":");id::gameid(u@0);p::parsepulls(u@1);d,id,p}
+process::{[d];d::x;parse(d;y)}
+
+power::{*/{x@1}'x}
+powergames::{[games];games::x;{power(x@1)}'games}
+
+readlines::{.mi{x;.rl()}\~.rl()}
+main::{[d];.fc(.ic(.os.argv@0));d:::{};process(d;)'readlines();powergames(d)}
+.p(+/main())
