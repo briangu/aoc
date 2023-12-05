@@ -1,0 +1,24 @@
+.l("common.kg")
+
+setmax::{[v];v::.rs(y);:[:_x?z;x,z,v;:[v>(x?z);x,z,v;0]]}
+color::{[u];u::SPLIT(y;" ");setmax(x;u@-2;u@-1)}
+pull::{[p s];p::x;s::y;color(p;)'SPLIT(s;",")}
+parsepulls::{[p k u];p:::{};k::";";pull(p;)'SPLIT(x;k);p}
+
+gameid::{SPLIT(x;" ")@1}
+
+parse::{[d s id p u];d::x;s::y;u::SPLIT(s;":");id::gameid(u@0);p::parsepulls(u@1);d,id,p}
+process::{[d];d:::{};parse(d;x);d}
+
+maxcubes:::{}
+maxcubes,"red",12
+maxcubes,"green",13
+maxcubes,"blue",14
+
+exceedsMax::{0<+/{(maxcubes?(x@0))<(x@1)}'x}
+fffiltergames::{[games a];games::x;a::[];{:[exceedsMax(x@1);0;a::a,x@0]}'games;a}
+filtergames::{[games a];.p(x);games::x;a::[];{.p(x)}'games;a}
+
+readlines::{.mi{x;.rl()}\~.rl()}
+main::{.fc(.ic(.os.argv@0));filtergames(process'readlines())}
+.p(main())
