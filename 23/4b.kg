@@ -13,10 +13,11 @@ cardid::{SPLIT(x;" ")@1}
 cm::{[w h];w::x@0;h::x@1;+/{#w?x}'h}
 
 :" compute score "
-score::{:[x>0;2^(x-1);0]}
+mkadd::{[a];a::&x;{a::a:=1,,x}'y+!z;a}
+score::{[p q];p::x;q::1+&#x;{q::q+(q@x)*mkadd(#q;x+1;p@x)}'!#q;q}
 
-process::{[id n];u::SPLIT(x;":");id::cardid(u@0);score(cm(sn(u@1)))}
+process::{[id n];u::SPLIT(x;":");id::cardid(u@0);cm(sn(u@1))}
 
 readlines::{.mi{x;.rl()}\~.rl()}
-main::{.fc(.ic(.os.argv@0));process'readlines()}
+main::{.fc(.ic(.os.argv@0));score(process'readlines())}
 q::main();.p(q);.p(+/q)
