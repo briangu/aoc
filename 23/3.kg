@@ -23,7 +23,7 @@ isd::{adj::adj|sn(x;y;z);d::d,c}
 iss::{:[(#d)&adj;digits::digits,,.rs(d);0];adj::0;d::""}
 
 :" find digits in row "
-fdr::{[m r q d adj];m::x;r::y;adj::0;d::"";{[c];c::(m@r)@x;:[ISN(c);isd(x;r;m);iss()]}'rangex(m)}
+fdr::{[m r q d adj];m::x;r::y;adj::0;d::"";{[c];c::(m@r)@x;:[ISN(c);isd(x;r;m);iss()]}'rangex(m);iss()}
 
 :" find all digits next to symbols "
 find::{[m digits];m::x;digits::[];fdr(m;)'rangey(m);digits}
