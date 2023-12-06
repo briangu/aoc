@@ -1,0 +1,22 @@
+.l("common.kg")
+
+:" parse numbers "
+pn::{.rs("[",x,"]")}
+
+:" split winning numbers from numbers we have "
+sn::{pn'SPLIT(x;"|")}
+
+:" get the card id "
+cardid::{SPLIT(x;" ")@1}
+
+:" count matches "
+cm::{[w h];w::x@0;h::x@1;+/{#w?x}'h}
+
+:" compute score "
+score::{:[x>0;2^(x-1);0]}
+
+process::{[id n];u::SPLIT(x;":");id::cardid(u@0);score(cm(sn(u@1)))}
+
+readlines::{.mi{x;.rl()}\~.rl()}
+main::{.fc(.ic(.os.argv@0));process'readlines()}
+q::main();.p(q);.p(+/q)
