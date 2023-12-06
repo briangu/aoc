@@ -1,0 +1,36 @@
+.l("common.kg")
+
+mkline::{+/{"."}'!2+#(x@0)}
+wrap::{".",x,"."}
+readmatrix::{[m];m::mkline(x);m::m,wrap'x;m::m,mkline(x);m}
+
+:" is symbol "
+is::{:[((x~".")|ISN(x));0;1]}
+
+:" scan cell "
+sc::{[r];r::y;+/{is(r@x)}'x}
+
+:" scan neighbors "
+sn::{(sc(x+[-1 0 1];z@(y-1))+sc(x+[-1 1];z@y)+sc(x+[-1 0 1];z@(y+1)))>0}
+
+rangex::{[r];r::x@0;1+!((#r)-2)}
+rangey::{1+!((#x)-2)}
+
+:" handle is digit "
+isd::{adj::adj|sn(x;y;z);d::d,c}
+
+:" handle is symbol "
+iss::{:[(#d)&adj;digits::digits,,.rs(d);0];adj::0;d::""}
+
+:" find digits in row "
+fdr::{[m r q d adj];m::x;r::y;adj::0;d::"";{[c];c::(m@r)@x;:[ISN(c);isd(x;r;m);iss()]}'rangex(m)}
+
+:" find all digits next to symbols "
+find::{[m digits];m::x;digits::[];fdr(m;)'rangey(m);digits}
+
+process::{[m];m::readmatrix(x);find(m)}
+
+readlines::{.mi{x;.rl()}\~.rl()}
+main::{[b];.fc(.ic(.os.argv@0));process(readlines())}
+q::main();.p(q);.p(+/q)
+
