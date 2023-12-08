@@ -1,0 +1,26 @@
+.l("common.kg")
+
+:" parse numbers "
+pn::{.rs("[",x,"]")}
+
+:" read seeds "
+rs::{pn(SPLIT(x;":")@1)}
+
+:" read map "
+rm::{[q];q::pn'x;{(x@1),(x@0),(x@2)}'q}
+
+:" parse maps "
+pm::{[lines idx];lines::x;idx::{#x?"map"}'lines;idx::&idx,1;{rm(((y-x)-2)#(x+1)_lines)}:'idx}
+
+:" find and convert source to destination "
+fl::{[t r];t::x;r::&{[b e];b::x@0;e::b+(x@2)-1;((t=b)|(t>b))&((t=e)|(t<e))}'y;:[r;(t-((y@r@0)@0))+((y@r@0)@1);t]}
+
+:" map path of seed to location "
+mp::{[t maps];t::x;maps::y;{t::fl(t;maps@x)}'!#maps;t}
+
+process::{[lines seeds maps];lines::x;seeds::rs(lines@0);maps::pm(2_lines);mp(;maps)'seeds}
+
+readlines::{.mi{x;.rl()}\~.rl()}
+main::{.fc(.ic(.os.argv@0));process(readlines())}
+q::main();.p(q);.p((q@<q)@0)
+
