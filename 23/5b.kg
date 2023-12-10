@@ -1,0 +1,26 @@
+.l("common.kg")
+
+:" parse numbers "
+pn::{.rs("[",x,"]")}
+
+:" read seeds "
+rs::{pn(SPLIT(x;":")@1)}
+
+:" read map "
+rm::{[q p];q::pn'x;p::{(x@1),((x@1)+(x@2)),((x@0)-(x@1))}'q;p@<{x@0}'p}
+
+:" parse maps "
+pm::{[lines idx];lines::x;idx::{#x?"map"}'lines;idx::idx,[0 1];idx::&idx;{rm(((y-x)-2)#(x+1)_lines)}:'idx}
+
+ifa::{:[x<y;arr::arr,,x,y;0]}
+tpcases::{ifa(start;(a1&end));ifa((a1|start)+d;(a2&end)+d)}
+tp::{[start end];start::x@0;end::x@1;{[a1 a2 d];a1::x@0;a2::x@1;d::x@2;tpcases();start::start|(a2&end)}'mapping;arr::arr,,start,end}
+translate::{[mapping pairs arr];mapping::x;pairs::y;arr::[];tp'pairs;arr}
+solve::{[mappings seed];mappings::x;seed::y;{seed::translate(x;seed)}'mappings;seed::{x@0}'seed;(seed@<seed)@0}
+
+:" solve(mappings;seed) "
+process::{[lines seed mappings];lines::x;seed::rs(lines@0);mappings::(pm(2_lines));seed::[-1 2]:^seed;seed::{(x@0),((x@0)+(x@1))}'seed;solve(mappings;seed)}
+
+readlines::{.mi{x;.rl()}\~.rl()}
+main::{.fc(.ic(.os.argv@0));process(readlines())}
+q::main();.p(q)
